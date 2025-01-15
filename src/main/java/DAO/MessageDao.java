@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import Model.Message;
 import Util.ConnectionUtil;
@@ -33,6 +35,25 @@ public class MessageDao {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public List<Message> getAllMessages() {
+        Connection connection = ConnectionUtil.getConnection();
+        List<Message> messages = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM message;";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()) {
+                Message message = new Message(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getLong(4));
+                messages.add(message);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return messages;
     }
     
 }

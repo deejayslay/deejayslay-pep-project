@@ -1,6 +1,9 @@
 package Controller;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -36,6 +39,7 @@ public class SocialMediaController {
         app.post("/register", this::postAccountHandler);
         app.post("/login", this::processLoginHandler);
         app.post("/messages", this::postMessageHandler);
+        app.get("/messages", this::getAllMessagesHandler);
 
         return app;
     }
@@ -72,12 +76,9 @@ public class SocialMediaController {
 
     private void postMessageHandler(Context ctx) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
-        System.out.println("Line 74!");
         Message message = mapper.readValue(ctx.body(), Message.class);
         if (this.accountService.getAccountById(message.getPosted_by()) != null) {
-            System.out.println("Line 76!");
             Message newMessage = this.messageService.createMessage(message);
-            System.out.println("Line 78!");
             if (newMessage != null) {
                 ctx.json(mapper.writeValueAsString(newMessage));
             } else {
@@ -86,6 +87,15 @@ public class SocialMediaController {
         } else {
             ctx.status(400);
         }
+    }
+
+    private void getAllMessagesHandler(Context ctx) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        List<Message> messages = new ArrayList<>();
+
+        messages = this.messageService.getAllMessages();
+
+        ctx.json(mapper.writeValueAsString(messages));
     }
 
 
