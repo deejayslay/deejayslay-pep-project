@@ -72,14 +72,19 @@ public class SocialMediaController {
 
     private void postMessageHandler(Context ctx) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
+        System.out.println("Line 74!");
         Message message = mapper.readValue(ctx.body(), Message.class);
         if (this.accountService.getAccountById(message.getPosted_by()) != null) {
+            System.out.println("Line 76!");
             Message newMessage = this.messageService.createMessage(message);
+            System.out.println("Line 78!");
             if (newMessage != null) {
                 ctx.json(mapper.writeValueAsString(newMessage));
             } else {
                 ctx.status(400);
             }
+        } else {
+            ctx.status(400);
         }
     }
 

@@ -16,7 +16,7 @@ public class AccountService {
     }
 
     public Account getAccountById(int id) {
-        return this.getAccountById(id);
+        return this.accountDao.getAccountById(id);
     }
 
     public Account createAccount(Account acct) {

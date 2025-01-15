@@ -20,7 +20,7 @@ public class AccountDao {
             ps.setString(1, username);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                return new Account(rs.getInt(1), rs.getString("username"), rs.getString("password"));
+                return new Account(rs.getInt(1), rs.getString(2), rs.getString(3));
             }
         } catch (SQLException e) {
             e.printStackTrace();
