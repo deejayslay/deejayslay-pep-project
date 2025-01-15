@@ -28,6 +28,24 @@ public class AccountDao {
         return null;
 
     }   
+
+    public Account getAccountById(int id) {
+        Connection connection = ConnectionUtil.getConnection();
+        
+        try {
+            String sql = "SELECT * FROM Account WHERE account_id = ?;";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return new Account(rs.getInt(1), rs.getString(2), rs.getString(3));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
     
     
     public Account createAccount(Account acct) {
