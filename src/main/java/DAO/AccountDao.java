@@ -13,7 +13,7 @@ public class AccountDao {
 
     public Account getAccountByUsername(String username) {
         Connection connection = ConnectionUtil.getConnection();
-        
+
         try {
             String sql = "SELECT * FROM Account WHERE username = ?;";
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -26,7 +26,6 @@ public class AccountDao {
             e.printStackTrace();
         }
         return null;
-
     }   
 
     public Account getAccountById(int id) {
@@ -78,6 +77,4 @@ public class AccountDao {
         }
         return null;
     }
-
-
 }

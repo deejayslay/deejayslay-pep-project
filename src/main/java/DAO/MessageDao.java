@@ -139,6 +139,5 @@ public class MessageDao {
             e.printStackTrace();
         }
         return messages;
-    }
-    
+    }   
 }
