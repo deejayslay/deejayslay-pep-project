@@ -11,6 +11,7 @@ import Util.ConnectionUtil;
 
 public class AccountDao {
 
+    // helper method
     public Account getAccountByUsername(String username) {
         Connection connection = ConnectionUtil.getConnection();
 
@@ -28,6 +29,7 @@ public class AccountDao {
         return null;
     }   
 
+    // another helper method
     public Account getAccountById(int id) {
         Connection connection = ConnectionUtil.getConnection();
         
@@ -45,7 +47,6 @@ public class AccountDao {
         return null;
 
     }
-    
     
     public Account createAccount(Account acct) {
         Connection connection = ConnectionUtil.getConnection();

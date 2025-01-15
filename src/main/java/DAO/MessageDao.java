@@ -40,6 +40,7 @@ public class MessageDao {
     public List<Message> getAllMessages() {
         Connection connection = ConnectionUtil.getConnection();
         List<Message> messages = new ArrayList<>();
+        
         try {
             String sql = "SELECT * FROM message;";
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -63,7 +64,6 @@ public class MessageDao {
             String sql = "SELECT * FROM message WHERE message_id = ?;";
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, message_id);
-
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
@@ -82,6 +82,7 @@ public class MessageDao {
     public Message deleteMessageById(int message_id) {
         Connection connection = ConnectionUtil.getConnection();
         Message foundMessage = this.getMessageById(message_id);
+
         try {
             if (foundMessage != null) {
                 String sql = "DELETE FROM message WHERE message_id = ?;";
@@ -124,6 +125,7 @@ public class MessageDao {
     public List<Message> getAllMessagesByUser(int account_id) {
         Connection connection = ConnectionUtil.getConnection();
         List<Message> messages = new ArrayList<>();
+
         try {
             String sql = "SELECT * FROM message WHERE message_id = ?;";
             PreparedStatement ps = connection.prepareStatement(sql);

@@ -11,6 +11,7 @@ public class AccountService {
         this.accountDao = new AccountDao();
     }
 
+    // for testing with mock objects
     public AccountService(AccountDao accountDao) {
         this.accountDao = accountDao;
     }

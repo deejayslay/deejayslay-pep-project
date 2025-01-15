@@ -81,6 +81,7 @@ public class SocialMediaController {
     private void postMessageHandler(Context ctx) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         Message message = mapper.readValue(ctx.body(), Message.class);
+        // check if posted_by's account exists
         if (this.accountService.getAccountById(message.getPosted_by()) != null) {
             Message newMessage = this.messageService.createMessage(message);
             if (newMessage != null) {
@@ -108,7 +109,7 @@ public class SocialMediaController {
         Message message = this.messageService.getMessageById(message_id);
 
         if (message != null) {
-            ctx.json(message);
+            ctx.json(mapper.writeValueAsString(message));
         }
     }
 
@@ -118,22 +119,19 @@ public class SocialMediaController {
         Message deletedMessage = this.messageService.deleteMessageById(message_id);
 
         if (deletedMessage != null) {
-            ctx.json(deletedMessage);
+            ctx.json(mapper.writeValueAsString(deletedMessage));
         }
     }
 
     private void updateMessageByIdHandler(Context ctx) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         int message_id = mapper.readValue(ctx.pathParam("message_id"), Integer.class);
-
         Message newMessage = mapper.readValue(ctx.body(), Message.class);
-
         String newMessageText = newMessage.getMessage_text();
-
         Message updatedMessage = this.messageService.updateMessageById(message_id, newMessageText);
 
         if (updatedMessage != null) {
-            ctx.json(updatedMessage);
+            ctx.json(mapper.writeValueAsString(updatedMessage));
         } else {
             ctx.status(400);
         }
@@ -142,12 +140,10 @@ public class SocialMediaController {
     private void getAllMessagesByUserHandler(Context ctx) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         int account_id = mapper.readValue(ctx.pathParam("account_id"), Integer.class);
-
         List<Message> userMessages = new ArrayList<>();
-
         userMessages = this.messageService.getAllMessagesByUser(account_id);
 
-        ctx.json(userMessages);
+        ctx.json(mapper.writeValueAsString(userMessages));
     }
 
 }

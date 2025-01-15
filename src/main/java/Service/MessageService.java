@@ -13,6 +13,7 @@ public class MessageService {
         this.messageDao = new MessageDao();
     }
 
+    // for testing with mock objects
     public MessageService(MessageDao messageDao) {
         this.messageDao = messageDao;
     }
