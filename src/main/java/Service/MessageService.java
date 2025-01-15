@@ -24,5 +24,9 @@ public class MessageService {
     public List<Message> getAllMessages() {
         return this.messageDao.getAllMessages();
     }
+
+    public Message getMessageById(int message_id) {
+        return this.messageDao.getMessageById(message_id);
+    }
     
 }
